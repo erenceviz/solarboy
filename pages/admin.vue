@@ -3,7 +3,7 @@
       <div class="admin-header">
         <!-- Admin Panel Header erste Reihe-->
 
-        <h1>Admin Panel</h1>
+        <p class="customerlist">Ebene 2</p>
         <input type="text" placeholder="Nach Kunden suchen..." class="search-bar"/>
         <!-- Filterbutton -->
         <div class="filter-status">
@@ -11,11 +11,26 @@
           <button @click="clearFilterOptions">X</button>
           <div v-if="filterVisible" class="filter-options">
             <ul>
-              <li @click="applyFilter('Deal')">Deal</li>
-              <li @click="applyFilter('Offen')">Offen</li>
-              <li @click="applyFilter('1.Termin')">1.Termin</li>
-              <li @click="applyFilter('Folgetermin')">Folgetermin</li>
-              <li @click="applyFilter('No Deal')">No Deal</li>
+              <li>
+                <input type="checkbox" v-model="filters.Deal" id="filter-deal" />
+                <label for="filter-deal">Deal</label>
+              </li>
+              <li>
+                <input type="checkbox" v-model="filters.Offen" id="filter-offen" />
+                <label for="filter-offen">Offen</label>
+              </li>
+              <li>
+                <input type="checkbox" v-model="filters['1.Termin']" id="filter-termin" />
+                <label for="filter-termin">1.Termin</label>
+              </li>
+              <li>
+                <input type="checkbox" v-model="filters.Folgetermin" id="filter-folgetermin" />
+                <label for="filter-folgetermin">Folgetermin</label>
+              </li>
+              <li>
+                <input type="checkbox" v-model="filters['No Deal']" id="filter-nodeal" />
+                <label for="filter-nodeal">NoDeal</label>
+              </li>
             </ul>
           </div>
         </div>
@@ -72,6 +87,15 @@
   { id: 1, name: 'John Doe', dachart: 'Flachdach', preis: '15,000 €', kWp: 8, speicher: 'Ja', wallbox: 'Nein', status: 'Deal' }
   ]);
 
+  //Filter initial auf falsch gestellt
+  const filters = ref({
+    Deal: false,
+    Offen: false,
+    '1.Termin': false,
+    Folgetermin: false,
+    'No Deal': false,
+  });
+
 
   const addCustomer = () =>{
     // TODO
@@ -111,6 +135,89 @@
 
 
 <style scoped>
+
+  .customerlist{
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 39px;
+    margin-top: 34x;
+    margin-left:40px;
+  }
+
+  .admin-header {
+    display:flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    justify-content:space-between;
+    position:relative;
+    
+  }
+
+  .search-bar{
+    height: 52px;
+    width: 350px;
+    border-width: 1px;
+    border-radius: 500px;
+    border-color: #EDEDED;
+    border: 1px solid #EDEDED;
+    /* border-color: #000000; */
+    margin-top:40px;
+    font-size:17px;
+    font-weight: 500 !important;
+  }
+
+  .add-customer{
+    height: 52px;
+    width: 281px;
+    color: #F6F7F8;
+    border-width :1px;
+    border-radius: 500px;
+    border-color: #EDEDED;
+    border: 1px solid #EDEDED;
+    color: #212529;
+    font-size:17px;
+    font-weight: 500 !important;
+    margin-top:40px;
+    box-shadow: 0px 1px 2px 0px #00000005;
+
+    box-shadow: 0px 4px 4px 0px #00000005;
+
+    box-shadow: 0px 9px 6px 0px #00000003;
+
+    box-shadow: 0px 16px 7px 0px #00000000;
+
+    box-shadow: 0px 26px 7px 0px #00000000;
+   
+
+  }
   
+  
+  .filter-status{
+    position:relative;
+    width:319px;
+    margin-top:40px;
+  }
+
+  .filter-options{
+    position:absolute;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width:240px;
+    display:flex;
+    flex-wrap:nowrap;
+  }
+
+  .filter-options ul {
+    list-style-type: none; /* Removes bullet points */
+    padding: 0;            /* Removes any padding from the ul */
+    
+  }
+
+  .filter-options li {
+    margin-bottom: 5px;    /* Adds some space between the filter items */
+    display:flex;
+    flex-wrap:nowrap;
+  }
+
 </style>
-  
