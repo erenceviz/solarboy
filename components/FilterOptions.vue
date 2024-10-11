@@ -57,6 +57,7 @@ const selectedFilters = computed(() => {
 });
 
 const clearFilters = () => {
+  filterVisible.value = !filterVisible.value;
   Object.keys(filters.value).forEach(key => {
     filters.value[key] = false;
   });
@@ -108,9 +109,11 @@ const applyFilter = (filter) => {
       width: 240px;
       margin-right:100px;
       display: flex;
+      flex-direction: column;
       flex-wrap: nowrap; /* Ensure items stay on the same line */
       overflow: hidden; /* Hide overflow */
-      z-index: 1; /* Ensure it appears on top */
+      z-index: 10; /* Ensure it appears on top */
+      background-color: rgba(255, 255, 255, 0.9);
       
     }
 
@@ -140,4 +143,27 @@ const applyFilter = (filter) => {
         display:flex;
         flex-wrap:nowrap;
     }
+
+  /* Background colors for each filter option */
+  .filter-options li:nth-child(1) {
+    background-color: #CCFAF1;
+    border-color: #A5F1E1; /* Red */
+  }
+
+  .filter-options li:nth-child(2) {
+    background-color: #FAE7FF; /* Blue */
+    border-color: #F5D0FF;
+  }
+
+  .filter-options li:nth-child(3) {
+    background-color: #FFECD5; /* Green */
+    border-color: #F4E3CD;
+  }
+
+  .filter-options li:nth-child(4) {
+    background-color: #FEF8C3; /* Yellow */
+    border-color: #F2ECB4;
+  }
+
+  
 </style>

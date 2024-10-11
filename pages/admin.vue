@@ -15,39 +15,40 @@
         <add-customer></add-customer>
 
       </div>
+      
         <!-- Admin Panel Header zweite Reihe -->
-        <div class="customer-list-info">
-          <p>Kundenliste</p>
-          <p>Total customers: {{ totalCustomers }}</p>
+        <div class="customerlist-info">
+          <p class="kundenliste">Kundenliste</p>
+          <p class="anzahl-customer">{{ totalCustomers }}</p>
         </div>
         
       <!-- Adminpanel Tabelle -->
 
-      <div>
+      <div class="table-container" >
        <table>
         <thead>
-          <tr>
-            <th>Name</th>
+          <tr class="table-head">
+            <th style="margin-right: 100px;">Name</th>
             <th>Dachart</th>
             <th>Preis</th>
             <th>kWp</th>
             <th>Speicher</th>
             <th>Wallbox</th>
             <th>Status</th>
-            <th>Aktionen</th>
+            <th style="margin-right: 50px;" >Aktionen</th>
           </tr>
         </thead>
         <!--Einfügen der Customer Row Component-->
 
         <tbody>
-          <customer-row
+          <!-- <customer-row
             v-for="customer in customers"
             :key="customer.id"
             :customer="customer"
             @edit="editCustomer"
             @clone="cloneCustomer"
             @delete="deleteCustomer"
-            />
+            /> -->
         </tbody>
        </table>
       </div>
@@ -101,6 +102,36 @@
     margin-left:40px;
   }
 
+  .customerlist-info{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    margin-top:-43px;
+    margin-left:40px;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .kundenliste{
+    font-size:17px;
+    font-weight:500;
+    opacity: 50%;
+  }
+
+  .anzahl-customer{
+    border-radius: 5px;
+    background-color: #EDEDED;
+    height:22px;
+    width:38px;
+    font-size:12px;
+    font-weight:600;
+    line-height: 18px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .admin-header {
     display:flex;
     flex-direction: row;
@@ -109,6 +140,46 @@
     
   }
 
- 
+ .table-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap:70px;
+  border-radius: 5px;
+  background-color: #EDEDED;
+  font-weight: 400;
+  
+ }
 
+  tbody {
+    text-align: center;
+  }
+
+  th {
+    padding: 10px; /* Adds padding to the header cells */
+    
+    text-align: center; /* Centers the text inside each header cell */
+  }
+
+  thead {
+    text-align: center;
+  }
+
+  table {
+    width: 80%; /* Adjusts the width of the table, can be changed as needed */
+    border-collapse: collapse; /* Ensures the table cells share borders */
+  }
+
+  .table-container {
+    display: flex;
+    justify-content: center; /* Centers the table horizontally */
+    width: 1288px;
+    width: 100%; /* Ensures the container spans the entire width of the page */
+    font-size: 17px;
+    font-weight: 400;
+    opacity: 50%;
+    margin-top:30px;
+    
+  }
 </style>
