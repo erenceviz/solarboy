@@ -8,8 +8,9 @@ header {
 
 
 
-div {
+div,input, button{
   font-family: 'Poppins', sans-serif;
+  
 }
 
 @media only screen and (max-width: 1366px) and (max-height: 1024px) {
