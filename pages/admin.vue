@@ -149,6 +149,7 @@
   border-radius: 5px;
   background-color: #EDEDED;
   font-weight: 400;
+  z-index: 1;
   
  }
 
@@ -169,9 +170,12 @@
   table {
     width: 80%; /* Adjusts the width of the table, can be changed as needed */
     border-collapse: collapse; /* Ensures the table cells share borders */
+    z-index: 1;
+    position: relative;
   }
 
   .table-container {
+    position: relative;
     display: flex;
     justify-content: center; /* Centers the table horizontally */
     width: 1288px;
@@ -180,6 +184,7 @@
     font-weight: 400;
     opacity: 50%;
     margin-top:30px;
-    
+    z-index: 1;
+    overflow: visible;
   }
 </style>

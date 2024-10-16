@@ -5,6 +5,7 @@
 
 <style scoped>
  .search-bar{
+    position: relative;
     height: 48px;
     width: 344px;
     margin-bottom: 0px;
@@ -16,8 +17,8 @@
     /* font-family: 'Poppins', sans-serif; */
     line-height: 25.5px;
     text-align: center;
-    margin-left:100px;
-    margin-right:-70px;
+    margin-left:80px;
+    margin-right:-60px;
 }
 
 .search-bar::placeholder {
