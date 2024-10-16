@@ -6,35 +6,54 @@ header {
   text-align: center;
 }
 
-
-
-div,input, button{
+div, input, button {
   font-family: 'Poppins', sans-serif;
-  
 }
 
 @media only screen and (max-width: 1366px) and (max-height: 1024px) {
     .admin-header {
-      flex-direction: column; /* Change layout to column on smaller screens */
-      align-items: flex-start; /* Align items to start */
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .admin-header input {
-      width: 100%; /* Make input full width */
-      margin-bottom: 10px; /* Add space below input */
+      width: 100%;
+      margin-bottom: 10px;
     }
 
     .add-customer {
-      width: 100%; /* Make button full width */
+      width: 100%;
     }
 
     .filter-status {
-      width: 100%; /* Make filter status full width */
+      width: 100%; /* Adjust filter status for smaller screens */
+    }
+
+    .filter-content {
+      width: 100%;
+      white-space: normal; /* Allow wrapping for long selected filters */
     }
 
     .filter-options {
-      width: 100%; /* Ensure filter options take full width */
+      width: 100%; /* Full width on smaller screens */
+      max-height: 300px; /* Set max height to prevent overflow */
+      overflow-y: auto; /* Enable scrolling if content exceeds max height */
+      top: 55px; /* Adjust the dropdown position */
     }
 
-    /* Additional styles as needed for other components */
-  }
+    /* Styling the filter list items */
+    .filter-options ul {
+      list-style-type: none;
+      padding: 0;
+      max-height: 250px;
+      overflow-y: auto; /* Allow scroll if too long */
+    }
+
+    .filter-options li {
+      margin-bottom: 5px; /* Space between filter options */
+    }
+
+    .filter-options label {
+      background-color: transparent; /* Only color the label, not the whole row */
+    }
+}
