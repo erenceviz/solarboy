@@ -2,7 +2,7 @@
   <div class="filter-status" :style="{ width: buttonWidth }">
     <div class="filter-content">
       <span style="opacity: 50%;">Status</span>
-      <span  v-if="selectedFilters.length > 0">
+      <span v-if="selectedFilters.length > 0">
         <span v-for="filter in selectedFilters" :key="filter" :style="filterStyles[filter]" class="selected-filter">
           {{ filter }}
         </span>
@@ -10,30 +10,29 @@
     </div>
 
     <div class="filter-buttons">
-      <button @click="toggleFilterOptions" class="toggle-filters">
-        <!-- <span class="icon-dropdown"></span> -->
-      </button>
-      <button @click="clearFilters" class="clear-filters">
-        <!-- <i class="icon-clear"></i> -->
-      </button>
+      <button @click="toggleFilterOptions" :class="{ 'rotated': isRotated }" class="toggle-filters"></button>
+      <button @click="clearFilters" class="clear-filters"></button>
     </div>
 
-    <div v-if="filterVisible" class="filter-options">
-      <ul>
-        <li v-for="(value, key) in filters" :key="key">
-          <input type="checkbox" v-model="filters[key]" :id="`filter-${key}`" class="custom-checkbox" />
-          <span class="custom-label"></span>
-          <label :for="`filter-${key}`" :style="filterStyles[key]" >{{ key }} </label>
-        </li>
-        <div class="toggle-all">
-          <span>Alle auswählen</span>
-          <input @click="toggleAllOptions" type="checkbox" class="custom-checkbox2"/>
-          <span class="custom-label2"></span>
+    <transition name="slide-fade" mode="out-in">
+      <div v-if="filterVisible" :class="['filter-options', { 'visible': filterVisible }]">
+          <ul>
+            <li v-for="(value, key) in filters" :key="key">
+              <input type="checkbox" v-model="filters[key]" :id="`filter-${key}`" class="custom-checkbox" />
+              <span class="custom-label"></span>
+              <label :for="`filter-${key}`" :style="filterStyles[key]">{{ key }}</label>
+            </li>
+            <div class="divider"></div>
+          </ul>
+          <div class="toggle-all">
+            <span>Alle auswählen</span>
+            <input @click="toggleAllOptions" type="checkbox" class="custom-checkbox2" :id="'toggle-all'" />
+            <span :for="'toggle-all'" class="custom-label2"></span>
+            
+          </div>
         </div>
-        
-        
-      </ul>
-    </div>
+
+    </transition>
   </div>
 </template>
 
@@ -60,9 +59,15 @@ const filters = ref({
 
 const filterVisible = ref(false);
 const allSelected = ref(false);
+const isRotated = ref(false);
 
 const toggleFilterOptions = () => {
-  filterVisible.value = !filterVisible.value;
+  isRotated.value = !isRotated.value; // Toggle rotation
+  filterVisible.value = !filterVisible.value; // Toggle filter visibility
+
+  // Debugging logs
+  console.log('isRotated:', isRotated.value);
+  console.log('filterVisible:', filterVisible.value);
 };
 
 const selectedFilters = computed(() => {
@@ -77,95 +82,85 @@ const toggleAllOptions = () => {
 };
 
 const clearFilters = () => {
-  if (filterVisible.value ){
-    filterVisible.value = !filterVisible.value;
-  }
+  // Reset rotation and visibility states
+  isRotated.value = false;
+  filterVisible.value = false;
+
+  // Reset all filters to false
   Object.keys(filters.value).forEach(key => {
     filters.value[key] = false;
   });
+
+  // Reset allSelected state
+  allSelected.value = false;
 };
 
-const applyFilter = (filter) => {
-  console.log(`Applied filter: ${filter}`);
-};
-
-// Define styles for each filter
+// Define common styles for all filters
+const filterHeight = '31px';
 const filterStyles = {
-  Deal: {
-    backgroundColor: '#CCFAF1',
-    borderColor: '#A5F1E1',
-    color: '#0A6860',
-    height:'31px',
-    width:'52px',
-    
-  },
-  Offen: {
-    backgroundColor: '#FAE7FF',
-    borderColor: '#F5D0FF',
-    color: '#9E15AC',
-    height:'31px',
-    width:'59px'
-  },
-  '1. Termin': {
-    backgroundColor: '#FFECD5',
-    borderColor: '#F4E3CD',
-    color: '#C8501D',
-    height:'31px',
-    width:'82px'
-  },
-  Folgetermin: {
-    backgroundColor: '#FEF8C3',
-    borderColor: '#F2ECB4',
-    color: '#AE7736',
-    height:'31px',
-    width:'105px'
-  },
-  'No Deal': {
-    backgroundColor: '#FDE6EB',
-    borderColor: '#FDD4DD',
-    color: '#B7225F',
-    height:'31px',
-    width:'75px'
-  }
+  Deal: { backgroundColor: '#CCFAF1', borderColor: '#A5F1E1', color: '#0A6860', height: filterHeight, width: '52px' },
+  Offen: { backgroundColor: '#FAE7FF', borderColor: '#F5D0FF', color: '#9E15AC', height: filterHeight, width: '59px' },
+  '1. Termin': { backgroundColor: '#FFECD5', borderColor: '#F4E3CD', color: '#C8501D', height: filterHeight, width: '82px' },
+  Folgetermin: { backgroundColor: '#FEF8C3', borderColor: '#F2ECB4', color: '#AE7736', height: filterHeight, width: '105px' },
+  'No Deal': { backgroundColor: '#FDE6EB', borderColor: '#FDD4DD', color: '#B7225F', height: filterHeight, width: '75px' }
 };
-
 </script>
+
 
 
 
 <style scoped>
 
-  .toggle-filters{
-    height: 8px; /* Adjust height if needed */
-    width: 15px; /* Adjust width if needed */
-    
-    background-size: contain; /* Make sure the background fits */
-    border: 0; /* Remove border */
-    opacity: 50%; /* Set opacity */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    background:url('C:\Users\Eren\Documents\Business\nuxt-project\assets\01 align center down.svg');
-  }
-
-  .clear-filters{
+.toggle-filters {
     height: 15px; /* Adjust height if needed */
     width: 15px; /* Adjust width if needed */
-    
-    background-size: contain; /* Make sure the background fits */
+    background-repeat: no-repeat; /* Prevent image repeat */
+    background-size: contain; /* Ensures the image scales within the button */
+    background-position: center; /* Center the image */
     border: 0; /* Remove border */
-    /* Set opacity */
+    background-color: #fff;
+    opacity: 50%; /* Set opacity */
     cursor: pointer; /* Change cursor to pointer on hover */
-    background:url('C:\Users\Eren\Documents\Business\nuxt-project\assets\cross-small 1.svg');
+    background-image: url('@/assets/01 align center down.svg');
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.toggle-filters.rotated {
+    transform: rotate(-180deg); /* Rotate when active */
+}
+
+
+  .clear-filters {
+      height: 15px; /* Adjust height as needed */
+      width: 13px; /* Adjust width as needed */
+      background-repeat: no-repeat; /* Prevent image repeat */
+      background-size: contain; /* Ensures the image scales within the button */
+      background-position: center; /* Center the image */
+      background-color: #fff;
+      border: none; /* Remove any border */
+      cursor: pointer; /* Change cursor to pointer on hover */
+      background-image: url('@/assets/cross-small 1.svg'); /* Use 'background-image' instead of 'background' */
+      display: inline-block; /* Ensure the element respects its size */
+      vertical-align: middle; /* Align properly */
+      padding: 0; /* Remove padding if it's affecting layout */
   }
 
   .toggle-all{
     display:flex;
     justify-content: space-between;
-    margin-top: 30px;
-    margin-bottom: 0px;
+    margin-top:0px;
+    margin-bottom: 20px;
     
   }
 
-  
+  .divider {
+    width: 180px; 
+    height: 0.5px; 
+    background-color: #EDEDED; 
+    margin-top:20px;
+    
+}
+
 
   
     .filter-status{
@@ -196,29 +191,46 @@ const filterStyles = {
         margin-right:20px;
     }
 
+    
+
     .filter-options {
-      position: absolute;
-      top: 55px; /* Adjust vertical placement */
-      left: 0; /* Align with the filter button */
-      border-radius: 15px;
-      border: 1px solid #EDEDED;
-      padding: 20px 20px 10px 20px;
-      max-width: 198px;
-      max-height:320px;
-      margin-right:100px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap:nowrap; 
-      overflow: hidden; 
-      
-      z-index: 9999; /* Ensure it appears on top */
-      background-color: rgba(255, 255, 255, 0.9);
-      font-size: 14px;
-      margin-top: 5px;
-      
-      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      
-    }
+        position: absolute;
+        top: 55px;
+        left: 0;
+        border-radius: 15px;
+        border: 1px solid #EDEDED;
+        padding: 20px 20px 10px 20px;
+        max-width: 198px;
+        height: 287px;
+        max-height: 320px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 9999;
+        background-color: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        margin-top: 5px;
+        transition: opacity 0.3s ease, transform 0.3s ease; /* Add transition here */
+      }
+
+      .slide-fade-enter-active,
+      .slide-fade-leave-active {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .slide-fade-enter, 
+      .slide-fade-leave-to {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      .slide-fade-leave {
+        opacity: 1;
+        transform: translateY(10px);
+      }
+
+
 
     
 
@@ -263,7 +275,10 @@ const filterStyles = {
         list-style-type: none; /* Removes bullet points */
         padding: 0;  
         width:100%;
-        margin-top:0px;
+        margin-top:0;
+        margin-bottom: 0;
+        height:100%;
+        overflow-y: hidden;
   }
 
   .filter-options li {
@@ -273,12 +288,6 @@ const filterStyles = {
         align-items: start;
     }
 
-    /*.filter-options li {
-      display: flex;
-      
-      justify-content: flex-start;
-      margin-bottom: 5px;
-    }*/
     
     .filter-options input{
       z-index:3;
@@ -311,95 +320,32 @@ const filterStyles = {
       z-index: 9999;
     }
   
-    /*.filter-options input[type="checkbox"] {
-      margin-right: 10px; 
-      margin-left: 0;
-      border-radius: 3px;
-      border: 1px solid #EDEDED;
-      z-index: 9999;
-      height:24px;
-      width:24px;
-      background-color: aqua;
-    }*/
 
-    .custom-checkbox{
+    .custom-checkbox,
+    .custom-checkbox2 {
       position: absolute; /* Hide default checkbox */
       opacity: 0; /* Hide it visually */
     }
 
-    .custom-checkbox2{
-      position: absolute; /* Hide default checkbox */
-      opacity: 0; /* Hide it visually */
-    }
-    .custom-label {
-      position: relative;
-      padding-left: 30px; /* Space for the custom checkbox */
-      cursor: pointer; /* Change cursor on hover */
-      display: inline-block; /* To accommodate width and height */
-      font-weight: 500; /* Optional styling */
-      margin-top: 15px;
-      margin-right:5px;
-      
-    }
-
-    .custom-label::before {
-      content: '';
-      position: absolute;
-      left: 0; /* Position to the left of the text */
-      top:50%; /* Center vertically */
-      transform: translateY(-50%); /* Adjust to center */
-      width: 22px; /* Custom checkbox width */
-      height: 22px; /* Custom checkbox height */
-      border: 1px solid #EDEDED; /* Custom border color */
-      border-radius: 3px; /* Rounded corners */
-      background: white; /* Custom background */
-      z-index: 0; /* Behind label text */
-    }
-
-    /* Change appearance when checked */
-    .custom-checkbox:checked + .custom-label::before {
-      background: #2A3F94; /* Change to your preferred color */
-     
-    }
-    .filter-status {
-      width: auto; /* Make sure the filter status adjusts to content */
-    }
-
-    .custom-label::after {
-        content: '';
-        position: absolute;
-        left: 6px; /* Adjust to position it within the checkbox */
-        top: 50%; /* Center vertically */
-        transform: translateY(-50%); /* Adjust to center */
-        width: 12px; /* Width of the checkmark */
-        height: 12px; /* Height of the checkmark */
-        background: url('C:\Users\Eren\Documents\Business\nuxt-project\assets\check-11 1.svg') no-repeat center center; /* Your SVG here */
-        display: none; /* Hide by default */
-        z-index: 1; /* Ensure it appears above the custom checkbox */
-    }
-
-    /* Show checkmark when checkbox is checked */
-    .custom-checkbox:checked + .custom-label::after {
-        display: block; /* Show checkmark */
-    }
-
-
+    .custom-label,
     .custom-label2 {
       position: relative;
       padding-left: 30px; /* Space for the custom checkbox */
       cursor: pointer; /* Change cursor on hover */
       display: inline-block; /* To accommodate width and height */
       font-weight: 500; /* Optional styling */
-      margin-bottom:4px;
-      margin-right:5px;
-      
+      margin-top: 15px;
+      margin-right: 5px;
     }
 
+  
+    /* Custom Checkbox Styles */
+    .custom-label::before,
     .custom-label2::before {
       content: '';
       position: absolute;
       left: 0; /* Position to the left of the text */
-      top:50%; /* Center vertically */
+      top: 50%; /* Center vertically */
       transform: translateY(-50%); /* Adjust to center */
       width: 22px; /* Custom checkbox width */
       height: 22px; /* Custom checkbox height */
@@ -409,24 +355,42 @@ const filterStyles = {
       z-index: 0; /* Behind label text */
     }
 
-    .custom-label2::after {
-        content: '';
-        position: absolute;
-        left: 6px; /* Adjust to position it within the checkbox */
-        top: 50%; /* Center vertically */
-        transform: translateY(-50%); /* Adjust to center */
-        width: 12px; /* Width of the checkmark */
-        height: 12px; /* Height of the checkmark */
-        background: url('C:\Users\Eren\Documents\Business\nuxt-project\assets\check-11 1.svg') no-repeat center center; /* Your SVG here */
-        display: none; /* Hide by default */
-        z-index: 1; /* Ensure it appears above the custom checkbox */
-    }
+  
+    .custom-label2 {
+  margin-top: -4px; /* Use a negative value to move it up */
+}
 
-    .custom-checkbox2:checked + .custom-label2::after {
-        display: block; /* Show checkmark */
-    }
 
     
+
+    /* Change appearance when checked */
+    .custom-checkbox:checked + .custom-label::before,
+    .custom-checkbox2:checked + .custom-label2::before {
+      background: #2A3F94; /* Change to your preferred color */
+    }
+
+    /* Checkmark styles */
+    .custom-label::after,
+    .custom-label2::after {
+      content: '';
+      position: absolute;
+      left: 6px; /* Adjust to position it within the checkbox */
+      top: 50%; /* Center vertically */
+      transform: translateY(-50%); /* Adjust to center */
+      width: 12px; /* Width of the checkmark */
+      height: 12px; /* Height of the checkmark */
+      background: url('C:\Users\Eren\Documents\Business\nuxt-project\assets\check-11 1.svg') no-repeat center center; /* Your SVG here */
+      display: none; /* Hide by default */
+      z-index: 1; /* Ensure it appears above the custom checkbox */
+    }
+
+    /* Show checkmark when checkbox is checked */
+    .custom-checkbox:checked + .custom-label::after,
+    .custom-checkbox2:checked + .custom-label2::after {
+      display: block; /* Show checkmark */
+    }
+
+        
 
     
   }
