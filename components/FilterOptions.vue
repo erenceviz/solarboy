@@ -104,6 +104,8 @@ const filterStyles = {
   Folgetermin: { backgroundColor: '#FEF8C3', borderColor: '#F2ECB4', color: '#AE7736', height: filterHeight, width: '105px' },
   'No Deal': { backgroundColor: '#FDE6EB', borderColor: '#FDD4DD', color: '#B7225F', height: filterHeight, width: '75px' }
 };
+
+
 </script>
 
 
@@ -379,7 +381,7 @@ const filterStyles = {
       transform: translateY(-50%); /* Adjust to center */
       width: 12px; /* Width of the checkmark */
       height: 12px; /* Height of the checkmark */
-      background: url('C:\Users\Eren\Documents\Business\nuxt-project\assets\check-11 1.svg') no-repeat center center; /* Your SVG here */
+      background: url('@/assets/check-11 1.svg') no-repeat center center; /* Your SVG here */
       display: none; /* Hide by default */
       z-index: 1; /* Ensure it appears above the custom checkbox */
     }

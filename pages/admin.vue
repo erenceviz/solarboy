@@ -23,22 +23,7 @@
         </div>
         
       <!-- Adminpanel Tabelle -->
-
-      <div class="table-container" >
-       <table>
-          <thead>
-            <tr class="table-head">
-              <th style="margin-right: 80px;">Name</th>
-              <th>Dachart</th>
-              <th>Preis</th>
-              <th>kWp</th>
-              <th>Speicher</th>
-              <th>Wallbox</th>
-              <th>Status</th>
-              <th>Aktionen</th>
-            </tr>
-          </thead>
-        </table>
+      <table-head></table-head>
 
         <!--Einfügen der Customer Row Component-->
         <table class="table-body">
@@ -53,7 +38,7 @@
               />
           </tbody>
        </table>
-      </div>
+      
     </div>
 </template>
   
@@ -65,10 +50,12 @@
   import SearchBar from '~/components/SearchBar.vue';
   import FilterOptions from '~/components/FilterOptions.vue';
   import AddCustomer from '~/components/AddCustomer.vue';
+  import TableHead from '~/components/TableHead.vue';
   
   // Testkunde
   const customers = ref([
-  { id: 1, name: 'John Doe', dachart: 'Flachdach', preis: '15,000 €', kWp: 8, speicher: 'Ja', wallbox: 'Nein', status: 'Deal' }
+  { id: 1, name: 'John Doe', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: 'Deal' },
+  { id: 2, name: 'Zachy Kurt', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: 'Folgetermin' }
   ]);
 
 
@@ -89,6 +76,8 @@
     
   const totalCustomers = ref(25); // Beispielnummer
 
+
+  
   
 </script>
 
@@ -142,7 +131,12 @@
     
   }
 
- .table-head{
+  .table-body{
+    display:flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+ /*.table-head{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -156,8 +150,8 @@
  }
 
   .table-head th{
-    padding: 5px; /* Adjust the padding to reduce the space */
-    text-align: center; /* Centers the text inside each cell */
+    padding: 5px; 
+    text-align: center; 
     font-weight: 500;
 }
 
@@ -166,17 +160,17 @@
   }
 
     .table-head th {
-        width: 150px; /* Set a fixed width for the other columns */
+        width: 150px; 
     }
 
   .table-head th:nth-child(8){
-      padding-right:40px; /* Adjust this width to control the size */
+      padding-right:40px;
   }
 
   table {
-    width: 100%; /* Adjusts the width of the table, can be changed as needed */
+    width: 100%; 
     width:1366px;
-    border-collapse: collapse; /* Ensures the table cells share borders */
+    border-collapse: collapse; 
     z-index: 1;
     position: relative;
   }
@@ -185,9 +179,9 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centers the table horizontally */
+    justify-content: center; 
     width: 1366px;
-    width: 100%; /* Ensures the container spans the entire width of the page */
+    width: 100%; 
     font-size: 17px;
     font-weight: 400;
     opacity: 50%;
@@ -198,18 +192,18 @@
   }
 
   .table-container table {
-    align-self: flex-start; /* Ensure the table aligns to the start */
-    width: 100%; /* Adjusts the width of the table */
-    border-collapse: collapse; /* Ensures the table cells share borders */
+    align-self: flex-start; 
+    width: 100%; 
+    border-collapse: collapse;
     position: relative;
-    border-radius: 30px 30px 0 0; /* Top-left and top-right corners */
-    overflow: hidden; /* Ensures the corners are clipped */
+    border-radius: 30px 30px 0 0; 
+    overflow: hidden; 
     margin-left:-10px;
 }
 
 
  
   .table-container table {
-      border: 1px solid #EDEDED; /* Adjust the color as needed */
-  }
+      border: 1px solid #EDEDED; 
+  }*/
 </style>
