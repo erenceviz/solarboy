@@ -55,7 +55,10 @@
   // Testkunde
   const customers = ref([
   { id: 1, name: 'John Doe', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: 'Deal' },
-  { id: 2, name: 'Zachy Kurt', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: 'Folgetermin' }
+  { id: 2, name: 'Zachy Kurt', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: 'Folgetermin' },
+  { id: 3, name: 'Martin Larsson', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: '1. Termin' },
+  { id: 4, name: 'Eren Ceviz', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: 'Offen' },
+  { id: 5, name: 'Jane Doe', dachart: 'Flachdach', preis: '15,000 €', kWp: '8 kWp', speicher: '14 kWh', charging:'Ja', wallbox: 'Nein', status: 'No Deal' },
   ]);
 
 

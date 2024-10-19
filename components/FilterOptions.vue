@@ -206,11 +206,12 @@ const filterStyles = {
         height: 287px;
         max-height: 320px;
         display: flex;
+        opacity: 100%;
         justify-content: space-between;
         flex-direction: column;
         overflow: hidden;
-        z-index: 9999;
-        background-color: rgba(255, 255, 255, 0.9);
+        
+        background-color: rgba(255, 255, 255, 1);
         font-size: 14px;
         margin-top: 5px;
         transition: opacity 0.3s ease, transform 0.3s ease; /* Add transition here */
@@ -244,7 +245,7 @@ const filterStyles = {
       line-height: 30px;
       font-weight:600 !important;
       display: inline-block;
-      z-index: 100;
+      
     }
 
     
@@ -256,13 +257,13 @@ const filterStyles = {
         white-space: nowrap; /* Prevent wrapping to the next line */
         overflow: hidden; /* Hide overflow */
         max-width: calc(100% - 60px); /* Adjust based on button sizes */
-        z-index: 9999;
+       
         
     }
 
     .filter-content span {
       margin-right: 8px; /* Add space between the selected filters */
-      z-index: 9999;
+     
      
     }
 

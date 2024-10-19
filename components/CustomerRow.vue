@@ -1,11 +1,12 @@
 <!-- CustomerRow als Component für die Tabelle-->
 
 <template>
-  <div>
+  
     <tr class="table-row">
-      <div>
-        <td>{{ customer.name }}</td>
-      </div>
+      <td class="name-content">
+        {{ customer.name }}
+        <button class="name-button"></button>
+      </td>
 
       <td class="table-content">
         <button class="roof-icon"></button>
@@ -41,13 +42,13 @@
 
       <td class="table-buttons">
         
-          <button @click="$emit('edit', customer)">Edit</button>
-          <button @click="$emit('clone', customer)">Clone</button>
-          <button @click="$emit('delete', customer)">Delete</button>
+          <button @click="$emit('edit', customer)" class="edit-button">Edit</button>
+          <button @click="$emit('clone', customer)" class="clone-button">Clone</button>
+          <button @click="$emit('delete', customer)" class="delete-button">Delete</button>
         
       </td>
     </tr>
-  </div>
+  
 </template>
 
 
@@ -58,11 +59,11 @@ import { defineProps } from 'vue';
 const filterHeight = '30px'; // or any other value you'd like to set
 
 const filterStyles = {
-  'Deal': { backgroundColor: '#CCFAF1', borderColor: '#A5F1E1', color: '#0A6860', height: filterHeight, width: '52px' },
-  'Offen': { backgroundColor: '#FAE7FF', borderColor: '#F5D0FF', color: '#9E15AC', height: filterHeight, width: '59px' },
-  '1. Termin': { backgroundColor: '#FFECD5', borderColor: '#F4E3CD', color: '#C8501D', height: filterHeight, width: '82px' },
-  'Folgetermin': { backgroundColor: '#FEF8C3', borderColor: '#F2ECB4', color: '#AE7736', height: filterHeight, width: '105px' },
-  'No Deal': { backgroundColor: '#FDE6EB', borderColor: '#FDD4DD', color: '#B7225F', height: filterHeight, width: '75px' }
+  'Deal': { backgroundColor: '#CCFAF1', borderColor: '#A5F1E1', color: '#0A6860', height: filterHeight, width: '52px', marginLeft: '0px' },
+  'Offen': { backgroundColor: '#FAE7FF', borderColor: '#F5D0FF', color: '#9E15AC', height: filterHeight, width: '59px', marginLeft: '0px' },
+  '1. Termin': { backgroundColor: '#FFECD5', borderColor: '#F4E3CD', color: '#C8501D', height: filterHeight, width: '82px', marginLeft: '-25px' },
+  'Folgetermin': { backgroundColor: '#FEF8C3', borderColor: '#F2ECB4', color: '#AE7736', height: filterHeight, width: '105px', marginLeft:'-50px' },
+  'No Deal': { backgroundColor: '#FDE6EB', borderColor: '#FDD4DD', color: '#B7225F', height: filterHeight, width: '75px', marginLeft: '-15px' }
 };
 
 const props = defineProps({
@@ -89,10 +90,25 @@ const getStatusStyle = (status) => {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding:30px 20px 30px 40px;
+  padding:30px 20px 30px 50px;
   align-items: center;
+  max-width:1366px;
+  margin-left:-10px;
 }
 
+.table-row:nth-child(even) {
+  background-color: #F6F7F8;
+}
+
+.name-content {
+  width: 150px; /* Adjust the width as necessary */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowed content */
+  text-overflow: ellipsis; /* Show ellipsis if the text overflows */
+  align-items: center; /* Ensure items are vertically aligned */
+  display: flex; /* Use flexbox to align text and button */
+  justify-content: space-between; /* Add spacing between text and button */
+}
 .table-content{
   text-align: center;
   padding-left:0px;
@@ -104,22 +120,69 @@ const getStatusStyle = (status) => {
   align-items: center;
   
 }
-.deal-content{
-  position: relative;
-      margin-right:20px;
-      border-radius: 5px;
-      text-align: center;
-      line-height: 30px;
-      font-weight:500;
-      display:flex;
-      justify-content: center;
-      flex-direction: row;
-      align-items: center;
+.deal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right:10px;
+  border-radius: 5px;
+  line-height: 30px;
+  font-weight: 500;
+  max-width: 105px; /* Set a minimum width */
+  flex-shrink: 0; /* Prevent shrinking */
+  flex-grow: 0; /* Prevent growing */
+  white-space: nowrap; /* Prevent text from wrapping */
+  text-align: center;
+  padding: 0 10px; /* Add some padding for better text alignment */
 }
+
 
 td button{
   margin-right:7px;
 }
+
+.edit-button {
+  background: url('@/assets/pencil.svg') no-repeat center center;
+  background-size: contain;
+  width: 24px; /* Set appropriate width */
+  height: 24px; /* Set appropriate height */
+  border: none;
+  cursor: pointer;
+  text-indent: -9999px; /* Hides the text */
+  margin-right:15px;
+}
+
+.clone-button {
+  background: url('@/assets/clone 1.svg') no-repeat center center;
+  background-size: contain;
+  width: 24px; /* Set appropriate width */
+  height: 24px;;
+  border: none;
+  cursor: pointer;
+  margin-right:15px;
+  text-indent: -9999px; /* Hides the text */
+}
+
+.delete-button {
+  background: url('@/assets/trash.svg') no-repeat center center;
+  background-size: contain;
+  width: 24px; /* Set appropriate width */
+  height: 24px;
+  border: none;
+  cursor: pointer;
+  text-indent: -9999px; /* Hides the text */
+}
+
+.name-button{
+  background: url('@/assets/angle-small-left 1.svg') no-repeat center center;
+  background-size: contain;
+  width: 20px; /* Set appropriate width */
+  height: 20px;
+  border: none;
+  cursor: pointer;
+  text-indent: -9999px; /* Hides the text */
+}
+
 
 .roof-icon{
   background:url('@/assets/roof-6 1.svg');
@@ -129,7 +192,7 @@ td button{
   background-repeat: no-repeat;
   background-size:contain;
   cursor: pointer;
-  margin-left:60px;
+  margin-left:-20px;
   background-position: center;
 }
 
@@ -195,10 +258,9 @@ td button{
 
 .table-buttons{
   margin-left:-50px;
+  margin-right: 20px;
 }
 
-button{
-  margin-right: 5px;
-}
+
 
 </style>

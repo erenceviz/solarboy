@@ -3,13 +3,35 @@
         <button class="add-button"></button>
         <button @click="addCustomer" class="new-customer">Neuen Kunden anlegen</button>
     </div>
-    
+    <!-- Customer Popup -->
+    <CustomerPopup
+          :isVisible="isPopupVisible"
+          title="Neuen Kunden anlegen"
+          @close="closePopup"
+          @save="saveCustomer"
+        />
 </template>
 
 <script setup>
-    const addCustomer = () =>{
-        // TODO
-    }
+import { ref } from 'vue';
+import CustomerPopup from './CustomerPopup.vue';
+const isPopupVisible = ref(false);
+
+const addCustomer = () => {
+  isPopupVisible.value = true;
+};
+
+const closePopup = () => {
+  isPopupVisible.value = false;
+};
+
+// Save customer details
+const saveCustomer = (customerData) => {
+  console.log('Customer saved:', customerData);
+  // Add logic to save the customer
+};
+
+
 </script>
 
 <style scoped>
