@@ -1,68 +1,70 @@
-<!-- CustomerRow als Component für die Tabelle-->
-
 <template>
-  
-    <tr class="table-row">
-      <td class="name-content">
-        {{ customer.name }}
-        <button class="name-button"></button>
-      </td>
+  <tr class="table-row">
+    <td class="name-content">
+      {{ customer.name }}
+      <button class="name-button"></button>
+    </td>
 
-      <td class="table-content">
-        <button class="roof-icon"></button>
-        {{ customer.dachart }}
-      </td>
+    <td class="table-content">
+      <button class="roof-icon"></button>
+      {{ customer.dachart }}
+    </td>
 
-      <td class="table-content">
-        <button class="price-icon"></button>
-        {{ customer.preis }}
-      </td>
+    <td class="table-content">
+      <button class="price-icon"></button>
+      {{ customer.preis }}
+    </td>
 
-      <td class="table-content">
-        <button class="solar-icon"></button>
-        {{ customer.kWp }}
-      </td>
+    <td class="table-content">
+      <button class="solar-icon"></button>
+      {{ customer.kWp }}
+    </td>
 
-      <td class="table-content">
-        <button class="archive-icon"></button>
-        {{ customer.speicher }}
-        <button class="charging-icon"></button>
-        {{ customer.charging }}
-      </td>
+    <td class="table-content">
+      <button class="archive-icon"></button>
+      {{ customer.speicher }}
+      <button class="charging-icon"></button>
+      {{ customer.charging }}
+    </td>
 
-      <td class="table-content">
-        <button class="wallbox-icon"></button>
-        {{ customer.wallbox }}
-      </td>
+    <td class="table-content">
+      <button class="wallbox-icon"></button>
+      {{ customer.wallbox }}
+    </td>
 
-      <td  class="deal-content" :style="getStatusStyle(customer.status)">
-        
-        {{ customer.status }}
-      </td>
+    <td class="deal-content" :style="getStatusStyle(customer.status)">
+      {{ customer.status }}
+    </td>
 
-      <td class="table-buttons">
-        
-          <button @click="$emit('edit', customer)" class="edit-button">Edit</button>
-          <button @click="$emit('clone', customer)" class="clone-button">Clone</button>
-          <button @click="$emit('delete', customer)" class="delete-button">Delete</button>
-        
-      </td>
-    </tr>
-  
+    <td class="table-buttons">
+      <button @click="editCustomer" class="edit-button">Edit</button>
+      <button @click="$emit('clone', customer)" class="clone-button">Clone</button>
+      <button @click="$emit('delete', customer)" class="delete-button">Delete</button>
+    </td>
+  </tr>
+
+  <!-- Conditionally render the CustomerPopup -->
+  <CustomerPopup
+    v-if="isPopupVisible"
+    :isVisible="isPopupVisible"
+    title="Neuen Kunden anlegen"
+    @close="closePopup"
+    @save="saveCustomer"
+  />
 </template>
 
-
 <script setup>
-import { defineProps } from 'vue';
+import { ref, defineProps } from 'vue';
+import CustomerPopup from './CustomerPopup.vue';
 
-// Define filterHeight
-const filterHeight = '30px'; // or any other value you'd like to set
+const isPopupVisible = ref(false);
+const filterHeight = '30px'; // Set filter height
 
 const filterStyles = {
   'Deal': { backgroundColor: '#CCFAF1', borderColor: '#A5F1E1', color: '#0A6860', height: filterHeight, width: '52px', marginLeft: '0px' },
   'Offen': { backgroundColor: '#FAE7FF', borderColor: '#F5D0FF', color: '#9E15AC', height: filterHeight, width: '59px', marginLeft: '0px' },
   '1. Termin': { backgroundColor: '#FFECD5', borderColor: '#F4E3CD', color: '#C8501D', height: filterHeight, width: '82px', marginLeft: '-25px' },
-  'Folgetermin': { backgroundColor: '#FEF8C3', borderColor: '#F2ECB4', color: '#AE7736', height: filterHeight, width: '105px', marginLeft:'-50px' },
+  'Folgetermin': { backgroundColor: '#FEF8C3', borderColor: '#F2ECB4', color: '#AE7736', height: filterHeight, width: '105px', marginLeft: '-50px' },
   'No Deal': { backgroundColor: '#FDE6EB', borderColor: '#FDD4DD', color: '#B7225F', height: filterHeight, width: '75px', marginLeft: '-15px' }
 };
 
@@ -77,7 +79,21 @@ const getStatusStyle = (status) => {
   return filterStyles[status] || {}; // return the style if it exists, or an empty object
 };
 
+const editCustomer = () => {
+  isPopupVisible.value = true; // Open the CustomerPopup
+};
+
+// Function to close the popup
+const closePopup = () => {
+  isPopupVisible.value = false; // Close the CustomerPopup
+};
+
+// You should define the saveCustomer function as well, depending on your implementation
+const saveCustomer = (customerData) => {
+  // Handle the saving of the customer data here
+};
 </script>
+
 
 
 

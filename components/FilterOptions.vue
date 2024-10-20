@@ -145,6 +145,7 @@ const filterStyles = {
       display: inline-block; /* Ensure the element respects its size */
       vertical-align: middle; /* Align properly */
       padding: 0; /* Remove padding if it's affecting layout */
+      opacity: 50%;
   }
 
   .toggle-all{
