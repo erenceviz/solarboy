@@ -1,8 +1,8 @@
 <template>
-  <tr class="table-row">
+  <tr :class="['table-row', { 'even-row': isEven(customer.id), 'odd-row': !isEven(customer.id) }]">
     <td class="name-content">
       {{ customer.name }}
-      <button class="name-button"></button>
+      <button class="name-button" @click="toggleExpandedRow(customer.id)"></button>
     </td>
 
     <td class="table-content">
@@ -39,9 +39,15 @@
     <td class="table-buttons">
       <button @click="editCustomer" class="edit-button">Edit</button>
       <button @click="$emit('clone', customer)" class="clone-button">Clone</button>
-      <button @click="$emit('delete', customer)" class="delete-button">Delete</button>
+      <button @click="openDeleteCustomer" class="delete-button">Delete</button>
     </td>
   </tr>
+
+  <ExpandedCustomerRow
+    v-if="isRowExpanded(customer.id)"
+    :customer="customer"
+    :backgroundColor="isEven(customer.id) ? '#F6F7F8' : '#FFFFFF'"
+  />
 
   <!-- Conditionally render the CustomerPopup -->
   <CustomerPopup
@@ -51,13 +57,24 @@
     @close="closePopup"
     @save="saveCustomer"
   />
+
+  <DeletePopup
+    v-if="isDeletePopupVisible"
+    :isVisible="isDeletePopupVisible"
+    title="Aktion bestätigen"
+    @close="closePopup"
+    @delete="deleteCustomer"
+  />
 </template>
 
 <script setup>
 import { ref, defineProps } from 'vue';
 import CustomerPopup from './CustomerPopup.vue';
+import DeletePopup from './DeletePopup.vue';
+import ExpandedCustomerRow from './ExpandedCustomerRow.vue';
 
 const isPopupVisible = ref(false);
+const isDeletePopupVisible = ref(false);
 const filterHeight = '30px'; // Set filter height
 
 const filterStyles = {
@@ -68,12 +85,30 @@ const filterStyles = {
   'No Deal': { backgroundColor: '#FDE6EB', borderColor: '#FDD4DD', color: '#B7225F', height: filterHeight, width: '75px', marginLeft: '-15px' }
 };
 
+const expandedRows = ref(new Set());
+
 const props = defineProps({
   customer: {
     type: Object,
     required: true,
   },
+ 
 });
+
+const isEven = (id) => id % 2 === 0;
+// Toggle expanded row for the given customer ID
+const toggleExpandedRow = (id) => {
+  if (expandedRows.value.has(id)) {
+    expandedRows.value.delete(id); // Collapse the row
+  } else {
+    expandedRows.value.add(id); // Expand the row
+  }
+};
+
+// Check if the row is expanded
+const isRowExpanded = (id) => {
+  return expandedRows.value.has(id);
+};
 
 const getStatusStyle = (status) => {
   return filterStyles[status] || {}; // return the style if it exists, or an empty object
@@ -83,9 +118,15 @@ const editCustomer = () => {
   isPopupVisible.value = true; // Open the CustomerPopup
 };
 
+const openDeleteCustomer = () => {
+  console.log("LULE");
+  isDeletePopupVisible.value = true;
+}
+
 // Function to close the popup
 const closePopup = () => {
   isPopupVisible.value = false; // Close the CustomerPopup
+  isDeletePopupVisible.value = false;
 };
 
 // You should define the saveCustomer function as well, depending on your implementation
@@ -100,8 +141,25 @@ const saveCustomer = (customerData) => {
 
 <style scoped>
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 
+div, input, button,span {
+  font-family: 'Poppins', sans-serif;
+}
+
+.even-row {
+  background-color: #F6F7F8; /* Light gray for even rows */
+}
+
+/* Background color for odd customer rows */
+.odd-row {
+  background-color: #FFFFFF; /* White for odd rows */
+}
+
+.expanded-row {
+  background-color: inherit; /* Inherit background color from parent */
+}
 .table-row{
   display: flex;
   flex-direction: row;
@@ -112,9 +170,8 @@ const saveCustomer = (customerData) => {
   margin-left:-10px;
 }
 
-.table-row:nth-child(even) {
-  background-color: #F6F7F8;
-}
+
+
 
 .name-content {
   width: 150px; /* Adjust the width as necessary */

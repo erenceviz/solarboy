@@ -32,22 +32,21 @@
 
       <!--zweite Reihe des Forms-->
       <div class="edit-row2">
-          <div class="edit-payment">
-              <span>Dach Komplexität</span>
-              <div class="zahlung-container">
-                  <input style="input:focus{outline: none;}" type="text" class="input-name"  placeholder="Zahlungsart auswählen" readonly @click="togglePaymentOptions" />
-                  <button @click="togglePaymentOptions" :class="{ 'rotated': isRotated.zahlung }" class="toggle-payments"></button>
-              </div>
-              
-              <transition name="slide-fade" mode="out-in">
-                  <div v-if="zahlungVisible" :class="['payment-options', { 'visible': zahlungVisible }]">
-                      <ul>
-                          <li>Barzahlung</li>
-                          <li>Finanzierung</li>
-                      </ul>
-                  </div>
-              </transition>
+        <div class="edit-payment">
+          <span>Zahlungsart</span>
+          <div class="zahlung-container">
+            <input style="input:focus{outline: none;}" type="text" class="input-name" :value="selectedZahlungsart" placeholder="Zahlungsart auswählen" readonly @click="togglePaymentOptions" />
+            <button @click="togglePaymentOptions" :class="{ 'rotated': isRotated.zahlung }" class="toggle-payments"></button>
           </div>
+          <transition name="slide-fade" mode="out-in">
+            <div v-if="zahlungVisible" :class="['payment-options', { 'visible': zahlungVisible }]">
+              <ul>
+                <li @click="selectZahlungsart('Barzahlung')">Barzahlung</li>
+                <li @click="selectZahlungsart('Finanzierung')">Finanzierung</li>
+              </ul>
+            </div>
+          </transition>
+        </div>
           
           <div class="edit-name">
               <span>Adresse</span>
@@ -98,38 +97,38 @@
                   <input class="input-dachart" placeholder="Dachart auswählen"/>
               </div> -->
               <div class="zahlung-container">
-                  <input style="input:focus{outline: none;}" type="text" class="input-name"  placeholder="Dachart auswählen" readonly @click="toggleDachartOptions" />
+                  <input style="input:focus{outline: none;}" type="text" class="input-name"  placeholder="Dachart auswählen" :value="selectedDachart" readonly @click="toggleDachartOptions" />
                   <button @click="toggleDachartOptions" :class="{ 'rotated': isRotated.dachart }" class="toggle-payments"></button>
               </div>
               
               <transition name="slide-fade" mode="out-in">
                   <div v-if="dachartVisible" :class="['dachart-options', { 'visible': dachartVisible }]">
                     <ul>
-                      <li>
+                      <li @click="selectDachart('Betonziegel')">
                         <button :class="['icon-button', 'beton-icon']"></button>
                         Betonziegel
                       </li>
-                      <li>
+                      <li @click="selectDachart('Tonziegel')">
                         <button :class="['icon-button', 'ton-icon']"></button>
                         Tonziegel
                       </li>
-                      <li>
+                      <li @click="selectDachart('Kurzschiene')">
                         <button :class="['icon-button', 'kurzschiene-icon']"></button>
                         Kurzschiene
                       </li>
-                      <li>
+                      <li @click="selectDachart('Blech')">
                         <button :class="['icon-button', 'blech-icon']"></button>
                         Blech
                       </li>
-                      <li>
+                      <li @click="selectDachart('Schiefer')">
                         <button :class="['icon-button', 'schiefer-icon']"></button>
                         Schiefer
                       </li>
-                      <li>
+                      <li @click="selectDachart('Ost/West')">
                         <button :class="['icon-button', 'ostwest-icon']"></button>
                         Ost/West
                       </li>
-                      <li>
+                      <li @click="selectDachart('Süd')">
                         <button :class="['icon-button', 'sued-icon']"></button>
                         Süd
                       </li>
@@ -161,23 +160,22 @@
           </div>
           
           <div class="edit-name">
-              <span>Zähler</span>
-              <div class="zahlung-container">
-                  <input style="input:focus{outline: none;}" type="text" class="input-name"  placeholder="Zähler auswählen" readonly @click="toggleZählerOptions" />
-                  <button @click="toggleZählerOptions" :class="{ 'rotated': isRotated.zähler }" class="toggle-payments"></button>
-              </div>
-              
-              <transition name="slide-fade" mode="out-in">
-                  <div v-if="zählerVisible" :class="['zähler-options', { 'visible': zahlungVisible }]">
-                      <ul>
-                          <li>SLS ODER AC</li>
-                          <li>Neuer Zählerschrank</li>
-                          <li>SLS+AC</li>
-                          <li>Kein Zähler</li>
-                      </ul>
-                  </div>
-              </transition>
+          <span>Zähler</span>
+          <div class="zahlung-container">
+            <input style="input:focus{outline: none;}" type="text" class="input-name" :value="selectedZähler" placeholder="Zähler auswählen" readonly @click="toggleZählerOptions" />
+            <button @click="toggleZählerOptions" :class="{ 'rotated': isRotated.zähler }" class="toggle-payments"></button>
           </div>
+          <transition name="slide-fade" mode="out-in">
+            <div v-if="zählerVisible" :class="['zähler-options', { 'visible': zählerVisible }]">
+              <ul>
+                <li @click="selectZähler('SLS ODER AC')">SLS ODER AC</li>
+                <li @click="selectZähler('Neuer Zählerschrank')">Neuer Zählerschrank</li>
+                <li @click="selectZähler('SLS+AC')">SLS+AC</li>
+                <li @click="selectZähler('Kein Zähler')">Kein Zähler</li>
+              </ul>
+            </div>
+          </transition>
+        </div>
       </div>
       
       <!-- Reihe für Buttons -->
@@ -200,6 +198,9 @@ const zahlungVisible = ref(false);
 const dachartVisible = ref(false);
 const zählerVisible = ref(false);
 
+const selectedZahlungsart = ref('');
+const selectedDachart = ref('');
+const selectedZähler = ref('');
 
 const isRotated = ref({
   zahlung: false,
@@ -252,6 +253,15 @@ const emit = defineEmits(['close', 'save']);
 
 
 const closePopup = () => {
+
+  currentOptionIndices.value.gerüst = 0; // Reset Gerüst option to first item
+  currentOptionIndices.value.dachartKomp = 0; 
+
+  selectedZahlungsart.value = '';
+  selectedDachart.value = '';
+  selectedZähler.value = '';
+
+
   if (isRotated.value.zähler){
     isRotated.value.zähler=!isRotated.value.zähler;
   } 
@@ -286,6 +296,24 @@ const handleSubmit = () => {
   closePopup();
 };
 
+const selectZahlungsart = (option) => {
+  selectedZahlungsart.value = option;
+  zahlungVisible.value = false; // Close options
+  isRotated.value.zahlung = false; // Reset rotation
+};
+
+const selectDachart = (option) => {
+  selectedDachart.value = option;
+  dachartVisible.value = false; // Close options
+  isRotated.value.dachart = false; // Reset rotation
+};
+
+const selectZähler = (option) => {
+  selectedZähler.value = option;
+  zählerVisible.value = false; // Close options
+  isRotated.value.zähler = false; // Reset rotation
+};
+
 const decreaseOption = (optionName) => {
 const optionsList = options.value[optionName];
 const currentIndex = currentOptionIndices.value[optionName];
@@ -313,6 +341,15 @@ if (currentIndex < optionsList.length - 1) {
 
   
   <style scoped>
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+div, input, button,span {
+  font-family: 'Poppins', sans-serif;
+}
+
   /* Full-page overlay */
   .rotated {
   transform: rotate(180deg); /* Or any other transformation you want */

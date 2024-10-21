@@ -35,6 +35,12 @@ const saveCustomer = (customerData) => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+div, input, button,span {
+  font-family: 'Poppins', sans-serif;
+}
  .add-customer {
   display: flex;
   justify-content: center; /* Center content horizontally */

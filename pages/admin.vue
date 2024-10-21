@@ -26,6 +26,7 @@
       <table-head></table-head>
 
         <!--Einfügen der Customer Row Component-->
+      
         <table class="table-body">
           <tbody>
             <customer-row
@@ -62,19 +63,6 @@
   ]);
 
 
-  
-
-  const editCustomer = (customer) =>{
-    // TODO
-  }
-
-  const cloneCustomer = (customer) =>{
-    // TODO
-  }
-
-  const deleteCustomer = (customer) =>{
-    // TODO
-  }
 
     
   const totalCustomers = ref(25); // Beispielnummer
@@ -87,6 +75,14 @@
 
 
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+div, input, button,span {
+  font-family: 'Poppins', sans-serif;
+}
+
 
   .customerlist{
     font-weight: 500;
@@ -138,75 +134,9 @@
     display:flex;
     justify-content: space-between;
     flex-direction: column;
+    overflow: auto; /* Enable scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: none;
   }
- /*.table-head{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #EDEDED;
-  font-weight: 400;
-  z-index: 1;
-  height:91px;
-  width:1366px;
  
-  
- }
-
-  .table-head th{
-    padding: 5px; 
-    text-align: center; 
-    font-weight: 500;
-}
-
-  thead {
-    text-align: center;
-  }
-
-    .table-head th {
-        width: 150px; 
-    }
-
-  .table-head th:nth-child(8){
-      padding-right:40px;
-  }
-
-  table {
-    width: 100%; 
-    width:1366px;
-    border-collapse: collapse; 
-    z-index: 1;
-    position: relative;
-  }
-
-  .table-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    width: 1366px;
-    width: 100%; 
-    font-size: 17px;
-    font-weight: 400;
-    opacity: 50%;
-    margin-top:10px;
-    z-index: 1;
-    overflow: visible;
-    
-  }
-
-  .table-container table {
-    align-self: flex-start; 
-    width: 100%; 
-    border-collapse: collapse;
-    position: relative;
-    border-radius: 30px 30px 0 0; 
-    overflow: hidden; 
-    margin-left:-10px;
-}
-
-
- 
-  .table-container table {
-      border: 1px solid #EDEDED; 
-  }*/
 </style>

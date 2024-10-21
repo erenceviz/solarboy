@@ -112,7 +112,12 @@ const filterStyles = {
 
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
+
+div, input, button,span {
+  font-family: 'Poppins', sans-serif;
+}
 .toggle-filters {
     height: 15px; /* Adjust height if needed */
     width: 15px; /* Adjust width if needed */
@@ -311,7 +316,7 @@ const filterStyles = {
   @media only screen and (max-width: 1366px) {
     .filter-options {
       width: 100%; /* Stretch filter options to full width */
-      z-index: 9999;
+      z-index: 900;
     }
   
     .filter-options li {
