@@ -140,7 +140,16 @@
           
           <div class="edit-name">
               <span>2. WR</span>
-              <input class="input-name" placeholder="Gerüst"/>
+              <div class="dachartkomp-container">
+                <input readonly class="input-dachart" />
+                  <div class="wr-container">
+                    <button class="circular-btn"></button>
+                    <span>Ja</span>
+                    <button class="circular-btn"></button>
+                    <span>Nein</span>
+                </div>
+              </div>
+
           </div>
 
       </div>
@@ -340,7 +349,7 @@ if (currentIndex < optionsList.length - 1) {
 </script>
 
   
-  <style scoped>
+<style scoped>
 
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -757,6 +766,65 @@ input:focus{
 
 }
 
+.wr-container{
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  max-width:148px;
+  align-items: center;
+  width:100%;
+  top:30%;
+  right:50%;
+}
+
+.wr-container span{
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+
+}
+
+.circular-btn{
+  border-radius:50%;
+  height:24px;
+  width:80px;
+  display:inline-block;
+  margin-bottom:15px;
+  background-color: white;
+  position: relative;
+  border: 1.5px solid #2A3F94
+}
+
+.circular-btn:after{
+  border-radius:50%;
+  height:24px;
+  width:80px;
+  display:inline-block;
+  margin-bottom:15px;
+  background-color: white;
+  position: relative;
+  color:#2A3F94;
+  border: 1.5px solid #2A3F94;
+}
+
+.circular-btn-input {
+  display: none;
+}
+
+/* Add small circle inside the button when clicked */
+.circular-btn-input:checked + .circular-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #2a3f94; /* Color of the small circle */
+  border-radius: 50%;
+}
+
 .dachart-options{
     
     width: 368px;
@@ -1016,5 +1084,5 @@ input:focus{
     opacity: 1;
     z-index: 99999;
     }
-  </style>
+</style>
   

@@ -2,7 +2,7 @@
   <tr :class="['table-row', { 'even-row': isEven(customer.id), 'odd-row': !isEven(customer.id) }]">
     <td class="name-content">
       {{ customer.name }}
-      <button class="name-button" @click="toggleExpandedRow(customer.id)"></button>
+      <button class="name-button" @click="toggleExpandedRow(customer.id)" :class="{ 'rotated': isRotated }"></button>
     </td>
 
     <td class="table-content">
@@ -73,6 +73,7 @@ import CustomerPopup from './CustomerPopup.vue';
 import DeletePopup from './DeletePopup.vue';
 import ExpandedCustomerRow from './ExpandedCustomerRow.vue';
 
+const isRotated = ref(false);
 const isPopupVisible = ref(false);
 const isDeletePopupVisible = ref(false);
 const filterHeight = '30px'; // Set filter height
@@ -98,6 +99,12 @@ const props = defineProps({
 const isEven = (id) => id % 2 === 0;
 // Toggle expanded row for the given customer ID
 const toggleExpandedRow = (id) => {
+  if (isRotated.value === true){
+    isRotated.value = false;
+  }else{
+    isRotated.value = true;
+  }
+  
   if (expandedRows.value.has(id)) {
     expandedRows.value.delete(id); // Collapse the row
   } else {
@@ -147,7 +154,10 @@ const saveCustomer = (customerData) => {
 div, input, button,span {
   font-family: 'Poppins', sans-serif;
 }
-
+.rotated {
+  transform: rotate(90deg); /* Or any other transformation you want */
+  transition: transform 0.3s ease; /* Adds smooth animation */
+}
 .even-row {
   background-color: #F6F7F8; /* Light gray for even rows */
 }
