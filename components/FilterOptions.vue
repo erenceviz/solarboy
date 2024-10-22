@@ -261,10 +261,21 @@ div, input, button,span {
         align-items: center;
         gap:2px; /* Space between 'Status' and selected filters */
         white-space: nowrap; /* Prevent wrapping to the next line */
-        overflow: hidden; /* Hide overflow */
+        overflow-x: auto;
         max-width: calc(100% - 60px); /* Adjust based on button sizes */
-       
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+        scrollbar-width: none; 
         
+    }
+
+    .filter-content::-webkit-scrollbar {
+      display: none; 
+    }
+
+   
+
+    .filter-content::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
     }
 
     .filter-content span {
