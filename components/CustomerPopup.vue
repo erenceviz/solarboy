@@ -139,18 +139,27 @@
           </div>
           
           <div class="edit-name">
-              <span>2. WR</span>
-              <div class="dachartkomp-container">
-                <input readonly class="input-dachart" />
-                  <div class="wr-container">
-                    <button class="circular-btn"></button>
-                    <span>Ja</span>
-                    <button class="circular-btn"></button>
-                    <span>Nein</span>
-                </div>
-              </div>
+            <span>2. WR</span>
+            <div class="dachartkomp-container">
+              <input readonly class="input-dachart" />
+              <div class="wr-container">
+                <!-- Ja radio button -->
+                <label class="wr-radio1">
+                  <input type="radio" name="wr" class="circular-btn-input" />
+                  <span class="circular-btn"></span>
+                  <span style="font-size:14px; font-weight:300; text-align:center; ">Ja</span>
+                </label>
 
+                <!-- Nein radio button -->
+                <label class="wr-radio2">
+                  <input type="radio" name="wr" class="circular-btn-input" />
+                  <span class="circular-btn"></span>
+                  <span style="font-size:14px; font-weight:300; text-align:center; ">Nein</span>
+                </label>
+              </div>
+            </div>
           </div>
+
 
       </div>
 
@@ -416,6 +425,15 @@ div, input, button,span {
     height: 86px;
   }
 
+  .edit-payment span{
+    font-size:17px;
+    font-weight:500;
+  }
+
+  .edit-name span{
+    font-size:17px;
+    font-weight:500;
+  }
   .input-name{
     background-color: #fff;
     border: 1px solid #EDEDED;
@@ -448,8 +466,7 @@ div, input, button,span {
     height:26px;
     opacity: 0px;
     text-align: left;
-    font-size:17px;
-    font-weight:500;
+    
     margin-bottom:10px;
     max-width: 368px;
   }
@@ -526,8 +543,7 @@ div, input, button,span {
     height:26px;
     opacity: 0px;
     text-align: left;
-    font-size:17px;
-    font-weight:500;
+    
     margin-bottom:10px;
     max-width: 368px;
   }
@@ -766,64 +782,76 @@ input:focus{
 
 }
 
-.wr-container{
+.wr-container {
   position: absolute;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  max-width:148px;
+  max-width: 148px;
   align-items: center;
-  width:100%;
-  top:30%;
-  right:50%;
+  width: 100%;
+  gap: 10px;
+  top: 55%;
+  right: 50%;
+  
 }
 
-.wr-container span{
-  font-size: 14px;
-  font-weight: 300;
-  text-align: center;
 
-}
-
-.circular-btn{
-  border-radius:50%;
-  height:24px;
-  width:80px;
-  display:inline-block;
-  margin-bottom:15px;
+.circular-btn {
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
   background-color: white;
   position: relative;
-  border: 1.5px solid #2A3F94
+  border: 1.5px solid #2a3f94;
+  transition: background-color 0.3s;
+  margin-top: -5px;
 }
 
-.circular-btn:after{
-  border-radius:50%;
-  height:24px;
-  width:80px;
-  display:inline-block;
-  margin-bottom:15px;
-  background-color: white;
-  position: relative;
-  color:#2A3F94;
-  border: 1.5px solid #2A3F94;
-}
-
-.circular-btn-input {
-  display: none;
-}
-
-/* Add small circle inside the button when clicked */
+/* Display small circle inside button when selected */
 .circular-btn-input:checked + .circular-btn::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
+  
   background-color: #2a3f94; /* Color of the small circle */
   border-radius: 50%;
 }
+
+.circular-btn-input {
+  
+  display: none;
+}
+
+.wr-radio1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+  width:60px;
+  height: 10px;
+  
+}
+
+.wr-radio2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+  width:69px;
+  max-height:10px;
+  
+}
+
+
+
 
 .dachart-options{
     
